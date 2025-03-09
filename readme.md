@@ -110,7 +110,7 @@ A API fornece os seguintes Endpoints:
 
 | Endpoint              | HTTP Method           | Description                    |
 | --------------------- | --------------------- | ------------------------------ |
-| /appointments-summary | GET                   | Generate a simples Dashboard   |
+| /appointments-summary | GET                   | Generate a simple Dashboard   |
 
 #### Appointments:
 
