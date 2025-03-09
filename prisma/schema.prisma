@@ -1,0 +1,246 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Profile {
+  id          Int       @id @unique @default(autoincrement())
+  name        String    @unique
+  description String
+  active      Boolean   @default(true)
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  deleted_at  DateTime?
+
+  users       User[]
+  doctors     Doctor[]
+
+  @@map("profiles")
+}
+
+model ProfilePermission {
+  id          Int       @id @unique @default(autoincrement())
+  code        String    @unique
+  description String
+  active      Boolean   @default(true)
+  profiles    String
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  deleted_at  DateTime?
+
+  @@map("profile_permissions")
+}
+
+model Department {
+  id            Int       @id @unique @default(autoincrement())
+  name          String
+  active        Boolean   @default(true)
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  deleted_at    DateTime?
+
+  users         User[]
+
+  @@map("departments")
+}
+
+model Addresses {
+  id              Int       @id @unique @default(autoincrement())
+  street          String
+  number          Int
+  neighborhood    String
+  city            String
+  state           String
+  cep             String
+  complement      String?
+  active          Boolean   @default(true)
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+  deleted_at      DateTime?
+
+  users           User[]
+  doctors         Doctor[]
+  patients        Patient[]
+
+  @@map("addresses")
+}
+
+model User {
+  id            Int        @id @unique @default(autoincrement())
+  name          String
+  email         String     @unique
+  contact       String?
+  user_code     String     @unique
+  password      String
+  department    Department @relation(fields: [department_id], references: [id])
+  department_id Int
+  address       Addresses  @relation(fields: [address_id], references: [id])
+  address_id    Int
+  profile       Profile    @relation(fields: [profile_id], references: [id])
+  profile_id    Int
+  active        Boolean    @default(true)
+  avatar        String?
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @updatedAt
+  deleted_at    DateTime?
+
+  @@map("users")
+}
+
+model Specialty {
+  id            Int       @id @unique @default(autoincrement())
+  name          String    @unique
+  description   String
+  active        Boolean   @default(true)
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  deleted_at    DateTime?
+
+  doctors         Doctor[]
+
+  @@map("specialties")
+}
+
+
+model Doctor {
+  id            Int        @id @unique @default(autoincrement())
+  name          String
+  email         String     @unique
+  contact       String?
+  user_code     String     @unique
+  password      String
+  specialty     Specialty  @relation(fields: [specialtie_id], references: [id])
+  specialtie_id Int
+  address       Addresses  @relation(fields: [address_id], references: [id])
+  address_id    Int
+  profile       Profile    @relation(fields: [profile_id], references: [id])
+  profile_id    Int
+  active        Boolean    @default(true)
+  avatar        String?
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @updatedAt
+  deleted_at    DateTime?
+
+  appointments  Appointment[]
+
+  @@map("doctors")
+}
+
+model PatientTreatment {
+  id           Int        @id @unique @default(autoincrement())
+  name         String @unique
+  description  String
+  active       Boolean    @default(true)
+  created_at   DateTime   @default(now())
+  updated_at   DateTime   @updatedAt
+  deleted_at   DateTime?
+
+  patients     Patient[]
+
+  @@map("patient_treatments")
+}
+
+model PatientHistory {
+  id           Int        @id @unique @default(autoincrement())
+  height       Int
+  weight       Int
+  birth        DateTime
+  gender       String
+  civil        String
+  occupation   String
+  medicament   String
+  comorbidity  String
+  observation  String?
+  created_at   DateTime   @default(now())
+  updated_at   DateTime   @updatedAt
+  deleted_at   DateTime?
+
+  patients     Patient[]
+
+  @@map("patient_history")
+}
+
+model Patient {
+  id            Int        @id @unique @default(autoincrement())
+  name          String
+  email         String     @unique
+  contact       String?
+  patientsTreatment          PatientTreatment  @relation(fields: [patient_treatment_id], references: [id])
+  patient_treatment_id  Int
+  patientsHistory            PatientHistory  @relation(fields: [patient_history_id], references: [id])
+  patient_history_id         Int
+  address                    Addresses  @relation(fields: [address_id], references: [id])
+  address_id                 Int
+  avatar        String?
+  active        Boolean    @default(true)
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @updatedAt
+  deleted_at    DateTime?
+
+  appointments  Appointment[]
+
+  @@map("patients")
+}
+
+model AppointmentStatus {
+  id            Int       @id @unique @default(autoincrement())
+  name          String    @unique
+  active        Boolean   @default(true)
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  deleted_at    DateTime?
+
+  appointments  Appointment[]
+
+  @@map("appointments_status")
+}
+
+model Appointment {
+  id            Int      @id @unique @default(autoincrement())
+  patient       Patient  @relation(fields: [patient_id], references: [id])
+  patient_id    Int
+  doctor        Doctor   @relation(fields: [doctor_id], references: [id])
+  doctor_id     Int
+  appointment   DateTime
+  status        AppointmentStatus  @relation(fields: [status_id], references: [id])
+  status_id     Int
+  active        Boolean   @default(true)
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  deleted_at    DateTime?
+
+  @@map("appointments")
+}
+
+model ItemCategory {
+  id            Int       @id @unique @default(autoincrement())
+  name          String    @unique
+  active        Boolean   @default(true)
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  deleted_at    DateTime?
+
+  items         Item[]
+
+  @@map("items_category")
+}
+
+model Item {
+  id            Int      @id @unique @default(autoincrement())
+  name          String   @unique
+  description   String
+  quantity      Int
+  price         Decimal  @db.Decimal(10, 2)
+  category      ItemCategory  @relation(fields: [category_id], references: [id])
+  category_id   Int
+  active        Boolean   @default(true)
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  deleted_at    DateTime?
+
+  @@map("items")
+}

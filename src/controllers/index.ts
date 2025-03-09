@@ -1,0 +1,7 @@
+export * from './appointments/appointments-controller'
+export * from './appointments-status/appointments-status-controller'
+export * from './doctors/doctors-controller'
+export * from './items/items-controller'
+export * from './patients/patients-controller'
+export * from './patients-treatments/patients-treatments-controller'
+export * from './users/users-controller'

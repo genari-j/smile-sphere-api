@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smile Sphere - Novo Agendamento</title>
+  </head>
+
+  <body>
+    <div>
+      <p>
+        Olá, {{ name }}! <br /> <br />
+        Você possui uma consulta agendada para {{ appointment }}, com o(a) Dr(a) {{ doctorName }}. <br />
+        Se você não foi o autor, apenas descarte esse e-mail.
+      </p>
+
+      <p>
+        Em caso de dúvidas, entre em contato conosco: <br />
+        <a href="{{ whatsLink }}" class="link-invitation" target="_blank">
+          <span class="span-invitation">Smile Sphere - WhatsApp</span>
+        </a>
+      </p>
+
+      <p>Agradecemos a preferência.</p>
+
+      <p>Atenciosamente,</p>
+      <h4>Smile Sphere</h4>
+    </div>
+  </body>
+</html>
