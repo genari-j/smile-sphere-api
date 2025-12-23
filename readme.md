@@ -31,9 +31,9 @@ A Aplicação simula às funcionalidades de uma Clínica de Dentista. Usuários 
 
     - `git clone https://github.com/genari-j/smile-sphere-api.git`
 
-2. Instale as dependências com npm
+2. Instale as dependências com yarn
 
-    - `npm i`
+    - `yarn`
 
 3. Crie um Banco de Dados em sua máquina
 
@@ -53,7 +53,7 @@ A Aplicação simula às funcionalidades de uma Clínica de Dentista. Usuários 
 
 #### Usabilidade
 
-1. Inicie a aplicação com npm -> `npm run dev`
+1. Inicie a aplicação com yarn -> `yarn dev`
 
 2. A API ficará acessível em -> `http://localhost:3002/`
     - Caso tenha colocado outra porta, apenas altere `3002` para sua porta;
@@ -65,7 +65,7 @@ A API fornece os seguintes Endpoints:
 
 | Endpoint                    | HTTP Method           | Description                      |
 | --------------------------- | --------------------- | -------------------------------- |
-| /                           | GET                   | Check if API is running          |
+| /                           | GET                   | Check API health                 |
 
 #### Users:
 

@@ -34,7 +34,7 @@ export type UpdateUserBody = Partial<
 	Omit<UserBaseResponse, 'id' | 'address_id' | 'created_at' | 'updated_at' | 'deleted_at'>
 >
 
-export type UserWithFKeyResponse = Prisma.UsersGetPayload<{
+export type UserWithFKeyResponse = Prisma.UserGetPayload<{
 	include: {
 		department: true
 		address: true
